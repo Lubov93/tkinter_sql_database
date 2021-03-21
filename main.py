@@ -1,10 +1,14 @@
-import tkinter
-import tkinter as tk
+
+from  tkinter import *
+from tkinter import ttk
+import  tkinter as tk
 from tkinter import messagebox
 from tkinter import Frame
 from tkinter import Entry
 from tkinter import Label
 from tkinter import Button
+from tkinter import Scrollbar
+from tkinter import VERTICAL
 import pymysql
 import random
 from tkinter import ttk
@@ -54,8 +58,8 @@ class memberConnect:
         ButtonFrame = Frame(MidFrame, bd=7, width=1340, height=50, bg='royal blue')
         ButtonFrame.grid(row=1, column=0)
 
-        ThreeviewFrame = Frame(MidFrame, bd=5, width=1340, height=400, padx=4)
-        ThreeviewFrame.grid(row=2, column=0, padx=5, pady=0)
+        TreeviewFrame = Frame(MidFrame, bd=5, width=1340, height=400, padx=4)
+        TreeviewFrame.grid(row=2, column=0, padx=5, pady=0)
 
         #===============================================================================
         self.lblTitle = Label(TitleFrames, font=('arial', 40, 'bold'), text="MySql Connection", bg="royal blue", fg='white')
@@ -134,6 +138,39 @@ class memberConnect:
         self.cboType["values"] = ("Member Type", "Annual Member", "Quatererly", 'Monthly')
         self.cboType.current(0)
         self.cboType.grid(row=2, column=5)
+
+        def ShowRecord(self):
+            sqlCon = pymysql.cursors.connect(host="localhost",
+                                             user="root",
+                                             password="",
+                                             database="Member")
+            cursors = sqlCon.cursors()
+            cursors.execute("SELECT* FROM Member")
+            results = cursors.fetchall()
+            if len(results) != 0:
+                self.member_record.delete(*self.member_record.get_children())
+                for row in results:
+                    self.member_record.insert("", END, values=row)
+                    sqlCon.commit()
+
+            sqlCon.close()
+
+        def MemberInfo(ev):
+            viewInfo = self.member_records.focus()
+            learnerData = self.member_records.item(viewInfo)
+            row = lea['values']
+
+            MemID.set(row[0])
+            Firstname.set(row[1])
+            Surname.set(row[2])
+            Address.set(row[3])
+            PoBox.set(row[4])
+            Gender.set(row[5])
+            Mobile.set(row[6])
+            Email.set(row[7])
+            Mtype.set(row[8])
+
+
         # ===============================================================================
         self.btnAddNew = Button(ButtonFrame, pady=1, bd=4, fg='black', font=("Arial", 16, "bold"), text="Add New", width=11,
                                 height=1, bg='royal blue',padx=29).grid(row=0, column=0, padx=1)
@@ -148,6 +185,47 @@ class memberConnect:
         self.btnAddNew = Button(ButtonFrame, pady=1, bd=4, fg='black', font=("Arial", 16, "bold"), text="Exit", width=11,
                                 height=1, bg='royal blue', padx=29).grid(row=0, column=5, padx=1)
         # ===============================================================================
+
+        # ===============================================================================
+
+
+        #================================================================
+
+
+        scroll_y = Scrollbar(TreeviewFrame, orient=VERTICAL)
+        self.member_records = ttk.Treeview(TreeviewFrame, columns=("memid", "firstname", "surname", "address", "pobox", "gender", "mobile", "email", "mtype"), yscrollcommand = scroll_y.set)
+        scroll_y.pack(side=RIGHT, fill=Y)
+
+        self.member_records.heading("memid", text="MemberID")
+        self.member_records.heading("firstname", text="Firstname")
+        self.member_records.heading("surname", text="Surname")
+        self.member_records.heading("address", text="Address")
+        self.member_records.heading("pobox", text="PO Box")
+        self.member_records.heading("gender", text="Gender")
+        self.member_records.heading("mobile", text="Mobile")
+        self.member_records.heading("email", text="Email")
+        self.member_records.heading("mtype", text="Member Type")
+
+        self.member_records['show'] = 'headings'
+
+        self.member_records.column("memid", width=148)
+        self.member_records.column("firstname", width=148)
+        self.member_records.column("surname", width=148)
+        self.member_records.column("address", width=148)
+        self.member_records.column("pobox", width=148)
+        self.member_records.column("gender", width=148)
+        self.member_records.column("mobile", width=148)
+        self.member_records.column("email", width=148)
+        self.member_records.column("mtype", width=148)
+
+        self.member_records.pack(fill=BOTH, expand=1)
+        self.member_records.bind("<ButtonRelease-1>", MemberInfo)
+
+        ShowRecord
+
+
+
+
 
 
 
