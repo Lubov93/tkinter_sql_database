@@ -83,12 +83,12 @@ class memberConnect:
         # ===============================================================================
         self.lblFirstname = Label(InnerFrame, font=('arial', 12, 'bold'), text="Firstname", bd=7, justify='left')
         self.lblFirstname.grid(row=1, column=0, padx=5, sticky='w')
-        self.txtFirstname = Entry(InnerFrame, font=('arial', 12, 'bold'), width=35, textvariable=MemID,bd=5, justify='left')
+        self.txtFirstname = Entry(InnerFrame, font=('arial', 12, 'bold'), width=35, textvariable=Firstname,bd=5, justify='left')
         self.txtFirstname.grid(row=1, column=1)
         # ===============================================================================
         self.lblSurname = Label(InnerFrame, font=('arial', 12, 'bold'), text="Surname", bd=7, justify='left')
         self.lblSurname.grid(row=2, column=0, padx=5, sticky='w')
-        self.txtSurname = Entry(InnerFrame, font=('arial', 12, 'bold'),bd=5, width=35, textvariable=MemID,
+        self.txtSurname = Entry(InnerFrame, font=('arial', 12, 'bold'),bd=5, width=35, textvariable=Surname,
                                   justify='left')
         self.txtSurname.grid(row=2, column=1)
         # ===============================================================================
@@ -134,6 +134,23 @@ class memberConnect:
         self.cboType["values"] = ("Member Type", "Annual Member", "Quatererly", 'Monthly')
         self.cboType.current(0)
         self.cboType.grid(row=2, column=5)
+        # ===============================================================================
+        self.btnAddNew = Button(ButtonFrame, pady=1, bd=4, fg='black', font=("Arial", 16, "bold"), text="Add New", width=11,
+                                height=1, bg='royal blue',padx=29).grid(row=0, column=0, padx=1)
+        self.btnAddNew = Button(ButtonFrame, pady=1, bd=4, fg='black', font=("Arial", 16, "bold"), text="Show record", width=11,
+                                height=1, bg='royal blue', padx=29).grid(row=0, column=1, padx=1)
+        self.btnAddNew = Button(ButtonFrame, pady=1, bd=4,fg='black',  font=("Arial", 16, "bold"), text="Update", width=11,
+                                height=1, bg='royal blue', padx=29).grid(row=0, column=2, padx=1)
+        self.btnAddNew = Button(ButtonFrame, pady=1, bd=4,fg='black', font=("Arial", 16, "bold"), text="Delete", width=11,
+                                height=1, bg='royal blue', padx=29).grid(row=0, column=3, padx=1)
+        self.btnAddNew = Button(ButtonFrame, pady=1, bd=4,fg='black', font=("Arial", 16, "bold"), text="Reset", width=11,
+                                height=1, bg='royal blue', padx=29).grid(row=0, column=4, padx=1)
+        self.btnAddNew = Button(ButtonFrame, pady=1, bd=4, fg='black', font=("Arial", 16, "bold"), text="Exit", width=11,
+                                height=1, bg='royal blue', padx=29).grid(row=0, column=5, padx=1)
+        # ===============================================================================
+
+
+
 
 
 root = tk.Tk()
